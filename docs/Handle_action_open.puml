@@ -1,0 +1,24 @@
+@startuml
+!pragma useVerticalIf on
+
+start
+
+partition Handle action "open" {
+    if (item is "door") then (yes)
+        if (location is "door") then (yes)
+            if (door_state is "unlocked") then (yes)
+                :set door_state = "open";
+                :set action_description = "You push the door and it swings open";
+            else (no)
+                :set action_description = "The door is locked";
+            endif
+        else (no)
+            :set action_description = "There is no door here";
+        endif
+    else (no)
+        :set action_description = "You cannot open that (//item//);
+    endif
+}
+
+stop
+@enduml

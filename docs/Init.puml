@@ -1,0 +1,13 @@
+@startuml
+partition Init {
+    :set initial state values;
+    note left
+        Several states to be detailed later
+        * gameover
+        * location
+        * items near
+        * items state
+        * items taken
+    end note
+}
+@enduml

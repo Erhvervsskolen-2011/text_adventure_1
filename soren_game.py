@@ -34,8 +34,16 @@ while not game_over:
     # debug info
     print("command:", command)
 
-    action = command[0 : command.rfind(' ')]
-    item = command[command.rfind(' ')+1 : ]
+    action = ""
+    item = ""
+
+    words = command.split()
+    if len(words) > 1:
+        action = " ".join(words[:-1])
+        item   = words[-1]
+    elif len(words) == 1:
+        action = words[0]
+    
 
     print(action)
     print(item)
@@ -50,7 +58,15 @@ while not game_over:
             else:
                 scene_description += "The Lamp as turned on, and on the table you can see a key." 
         elif item == "door":
+            current_pos = "door"
             scene_description = "In the wall there is a door. There is a huge lock on the door. The door won't open!"    
     elif action == "switch on" or action == "enable":
-        pass 
+        if item == "lamp":
+            if current_pos == "table":
+                lamp_state = "on"
+                scene_description = "The lamp is now on..."
+        else: 
+            pass 
+    elif action == "quit" or action == "q":
+        break
 # End of loop

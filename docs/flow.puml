@@ -1,0 +1,61 @@
+@startuml
+'object gameover
+
+!pragma useVerticalIf on
+
+
+start
+partition Init {
+    :Handle initialization;
+}
+
+while (gameover) is (False)
+    partition Display descriptions {
+        :Handle display;
+    }
+
+    :get user command>
+    :split `command` into action and item;
+
+    if (action is "go to") then (yes)
+        partition Handle action "go to" {
+           :Handle action "go to";
+        }
+    elseif (action is "switch on" or "enable") then (yes)
+        partition Handle action "switch on" {
+            :Handle action "switch on" ;
+        }  
+    elseif (action is "switch off" or "disable") then (yes)
+        partition Handle action "switch off" {
+            :Handle action "switch off";
+        }
+    elseif (action is "take") then (yes)
+        partition Handle action "take" {
+            :Handle action "take";
+        }
+    elseif (action is "throw") then (yes)
+        partition Handle "throw" {
+           :Handle action "throw";
+        }
+    elseif (action is "use") then (yes)
+        partition Handle "use" {
+            :Hande action "use";
+        }
+    elseif (action is "open") then (yes)
+        partition Handle "open" {
+            :Handle action "open";
+        }
+    endif 
+
+end while (True)
+
+:Show "The game ended in ...";
+if (win is True) then (yes)
+    :show "Success!";
+else (no)
+    :show "Failure";
+endif
+->the.end;
+stop
+
+@enduml

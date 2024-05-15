@@ -1,0 +1,20 @@
+@startuml
+!pragma useVerticalIf on
+
+start
+
+partition Handle "switch off" {
+    if (item is "lamp") then (yes)
+        if ("lamp" is in near_items) then (yes)
+            :set lamp_state = "off";
+            :set action_description = "You switched the lamp off";
+        else 
+            :set action_description = "There is no lamp here";
+        endif
+    else (no)
+        :set action_description = "you cannot switch that (//item//) off";
+    endif
+}
+
+stop
+@enduml

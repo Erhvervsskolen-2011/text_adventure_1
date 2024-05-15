@@ -1,0 +1,14 @@
+@startuml
+partition Display descriptions {
+        :Show action (if the was one);
+        :Show location description;
+        :Show items near;
+        :Show items taken;
+        ://DEBUG// Show posible actions;
+        note left
+            he user should experiment, 
+            to figure out what actions works where?
+        end note
+    }
+
+@enduml
