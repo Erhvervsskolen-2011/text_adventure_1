@@ -4,6 +4,7 @@ print("You wake up in a mysterious place.")
 
 cave_description = "You are in a dim lit room. You see a table, and on the wall a door"
 scene_description = cave_description
+action_description = ""
 # print(cave_description)
 
 
@@ -22,11 +23,18 @@ game_over = False
 # For the rest of eternaty (or the end of this game).
 # TODO Consider what will cause gameover?
 while not game_over:
+    
+    if current_pos == "table" and lamp_state == "on":
+        scene_description = "The Lamp as turned on, and on the table you can see a key."
+
+    print(action_description)
+    
     # for debugging:
     print("Debug info:")
     print("Verbs:", actions)
     print("items:", items)
     print("holding items:", holding_items)
+    
     
     print(scene_description)
     command = input( f"{prompt}> ")
@@ -60,13 +68,27 @@ while not game_over:
         elif item == "door":
             current_pos = "door"
             scene_description = "In the wall there is a door. There is a huge lock on the door. The door won't open!"    
+        else:
+            action_description = f"Invalid command.\nYou cannot go to {item}"
     elif action == "switch on" or action == "enable":
         if item == "lamp":
             if current_pos == "table":
                 lamp_state = "on"
-                scene_description = "The lamp is now on..."
+                action_description = "You switched the lamp on..."
+            else:
+                action_description = "There is no lamp here"
         else: 
             pass 
+    elif action == "take":
+        # [FIXME] kan man tage nøglen hvis lampen ikke er tændt, og det er mørkt
+        # [BUG] man skal KUN kunne tage nøglen, hvis man er ved bordet
+        # [TODO] "key" skal tilføjes til listen holding items  
+        if item == "key":
+            action_description = "You took the key"
+        else:
+            action_description = f"You cannot take {item}"
     elif action == "quit" or action == "q":
         break
+    else:
+        action_description = f'Invalid command. There is no action called "{action}"'
 # End of loop
