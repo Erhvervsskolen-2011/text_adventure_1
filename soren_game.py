@@ -11,7 +11,11 @@ action_description = ""
 prompt = "You can now make action by typing verbs and items"
 actions = ["go to", "switch on", "enable" ] # more to come
 items   = ["table", "door", "lamp", "Lock", "key"] # maybee item shall have states as well ...?
+
 holding_items = []
+near_items = []
+table_items = ['lamp', 'key']
+door_items = []
 
 lamp_state = "off"
 
@@ -65,7 +69,9 @@ while not game_over:
                 scene_description += "The Lamp as turned off." # but what if the lamp is on?
             else:
                 scene_description += "The Lamp as turned on, and on the table you can see a key." 
+            near_items = table_items
         elif item == "door":
+            near_items = door_items
             current_pos = "door"
             scene_description = "In the wall there is a door. There is a huge lock on the door. The door won't open!"    
         else:
@@ -83,10 +89,15 @@ while not game_over:
         # [FIXME] kan man tage nøglen hvis lampen ikke er tændt, og det er mørkt
         # [BUG] man skal KUN kunne tage nøglen, hvis man er ved bordet
         # [TODO] "key" skal tilføjes til listen holding items  
-        if item == "key":
-            action_description = "You took the key"
+        if item not in near_items:
+            action_description = f"{item} is not here, so you cannot take it."
         else:
-            action_description = f"You cannot take {item}"
+            if item == "key":
+                action_description = "You took the key"
+                holding_items.append('key')
+                near_items.remove('key')
+            else:
+                action_description = f"You cannot take {item}"
     elif action == "quit" or action == "q":
         break
     else:
