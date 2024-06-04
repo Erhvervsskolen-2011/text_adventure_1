@@ -32,11 +32,11 @@ while not game_over:
  
     #### possitional scene description
 
-    if current_pos == "table"
+    if current_pos == "table":
         if lamp_state == "on":
             scene_description += "The Lamp as turned on, and on the table you can see a key."
         else:
-            scene_description += "The Lamp as turned off." # but what if the lamp is on?
+            scene_description += "The Lamp as turned off." 
     elif current_pos == "door":
         scene_description = "In the wall there is a door. There is a huge lock on the door. The door won't open!"    
 
@@ -44,9 +44,10 @@ while not game_over:
     print('Debug info:########################################################################')
     # print("Verbs:", actions)
     # print("items:", items)
-    print('table_items:', table_items)
-    print('door_items:', door_items)
-    print('near_items:', near_items)
+    print('current_pos:  ', current_pos, )
+    print('table_items:  ', table_items)
+    print('door_items:   ', door_items)
+    print('near_items:   ', near_items)
     print("holding items:", holding_items)
     print('###################################################################################')    
 
@@ -67,13 +68,16 @@ while not game_over:
         action = words[0]
 
     print('Debug info:########################################################################')
-    print(action)
-    print(item)
+    print("command action:", action)
+    print("command item:",   item)
     print('###################################################################################')
     
+    # her kommer en kæmpe if/elif/else
+    # Yderst vælges på action, hvad man vil gøre
+        # i næste nivesu på `item`, hvilken ting man vil gøre noget ved
 
+    ### go to ###
     if action == "go to":
-        pass
         if item == "table":
             current_pos = "table"
             scene_description = "You are next to a table. There is a lamp on it. "
@@ -84,6 +88,8 @@ while not game_over:
             current_pos = "door"
         else:
             action_description = f"Invalid command.\nYou cannot go to {item}"
+    
+    ### switch on ###
     elif action == "switch on" or action == "enable":
         if item == "lamp":
             if current_pos == "table":
@@ -92,11 +98,16 @@ while not game_over:
             else:
                 action_description = "There is no lamp here"
         else: 
-            pass 
+            pass
+
+    ### switch off ###
+    # reverse of switch on
+
+    ### take ###
     elif action == "take":
-        # [FIXME] kan man tage nøglen hvis lampen ikke er tændt, og det er mørkt
-        # [BUG] man skal KUN kunne tage nøglen, hvis man er ved bordet
-        # [TODO] "key" skal tilføjes til listen holding items  
+        # [FIXME] kan man tage nøglen hvis lampen ikke er tændt, og det er mørkt ?
+        # [BUG][DONE] man skal KUN kunne tage nøglen, hvis man er ved bordet
+        # [TODO][DONE] "key" skal tilføjes til listen holding items  
         if item not in near_items:
             action_description = f"{item} is not here, so you cannot take it."
         else:
@@ -106,8 +117,19 @@ while not game_over:
                 near_items.remove('key')
             else:
                 action_description = f"You cannot take {item}"
+
+    ### throw ###
+    # as the key is the only thing you can take, it's also the only thing you can throw.
+    # you can throw it at either the table or the door
+    # throw must be the reverse of take
+    
+    ### open ###
+
+    ### quit ###
     elif action == "quit" or action == "q":
         break
+
+    ### invalid command ###
     else:
         action_description = f'Invalid command. There is no action called "{action}"'
 # End of loop
