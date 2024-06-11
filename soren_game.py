@@ -33,6 +33,7 @@ while not game_over:
     #### possitional scene description
 
     if current_pos == "table":
+        scene_description = "You are next to a table. There is a lamp on it. "
         if lamp_state == "on":
             scene_description += "The Lamp as turned on, and on the table you can see a key."
         else:
@@ -80,7 +81,7 @@ while not game_over:
     if action == "go to":
         if item == "table":
             current_pos = "table"
-            scene_description = "You are next to a table. There is a lamp on it. "
+            
             
             near_items = table_items
         elif item == "door":
@@ -102,6 +103,16 @@ while not game_over:
 
     ### switch off ###
     # reverse of switch on
+
+    elif action == "switch off" or action == "disable":
+        if item == "lamp":
+            if current_pos == "table":
+                lamp_state = "off"
+                action_description = "You turned the lamp off..."
+        else:
+            pass
+    
+
 
     ### take ###
     elif action == "take":
